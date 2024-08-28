@@ -28,6 +28,7 @@
             <th>Category</th> <!-- Column for the product category -->
             <th>Price</th> <!-- Column for the product price -->
             <th>Availability</th> <!-- Column for the product availability status -->
+            <th>Action</th><!-- Column for actions like editing the product -->
         </tr>
         
         <?php
@@ -43,6 +44,7 @@
             <td><?= $arr['category'] ?></td>
             <td><?= $arr['price'] ?></td>
             <td><?= $arr['availability'] ?></td>
+            <td><a href="editproduct.php?id=<?= $arr['id'] ?>">Edit</a></td>
         </tr>
         <?php
             $i++; // Increment the counter for the next row
