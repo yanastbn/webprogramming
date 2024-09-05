@@ -21,7 +21,7 @@ class Product {
 
     // The add() method is used to add a new product to the database.
     function add() {
-        // SQL query to insert a new product into the 'products' table.
+        // SQL query to insert a new product into the 'product' table.
         $sql = "INSERT INTO product (name, category, price, availability) VALUES (:name, :category, :price, :availability);";
 
         // Prepare the SQL statement for execution.
@@ -37,32 +37,19 @@ class Product {
         return $query->execute();
     }
 
-    // The edit() method is used to update an existing product in the database.
-    function edit() {
-        // SQL query to update an existing product in the 'products' table.
-        $sql = "UPDATE product SET name = :name, category = :category, price = :price, availability = :availability WHERE id = :id;";
-
-        // Prepare the SQL statement for execution.
-        $query = $this->db->connect()->prepare($sql);
-
-        // Bind the product properties to the named placeholders in the SQL statement.
-        $query->bindParam(':name', $this->name);
-        $query->bindParam(':category', $this->category);
-        $query->bindParam(':price', $this->price);
-        $query->bindParam(':availability', $this->availability);
-        $query->bindParam(':id', $this->id);
-
-        // Execute the query. If successful, return true; otherwise, return false.
-        return $query->execute();
-    }
-
     // The showAll() method retrieves all products from the database and returns them.
-    function showAll() {
+    function showAll($keyword='', $category='') {
         // SQL query to select all products, ordered alphabetically by name.
-        $sql = "SELECT * FROM product ORDER BY name ASC;";
+        // If keyword or category are provided, they are used for filtering the results.
+        $sql = "SELECT * FROM product WHERE (name LIKE '%' :keyword '%' OR category LIKE '%' :keyword '%') AND (category LIKE '%' :category '%') ORDER BY name ASC;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
+
+        // Bind the keyword and category parameters to the SQL query.
+        $query->bindParam(':keyword', $keyword);
+        $query->bindParam(':category', $category);
+
         $data = null; // Initialize a variable to hold the fetched data.
 
         // Execute the query. If successful, fetch all the results into an array.
@@ -73,6 +60,25 @@ class Product {
         return $data; // Return the fetched data.
     }
 
+    // The edit() method is used to update an existing product in the database.
+    function edit() {
+        // SQL query to update an existing product in the 'product' table.
+        $sql = "UPDATE product SET name = :name, category = :category, price = :price, availability = :availability WHERE id = :id;";
+
+        // Prepare the SQL statement for execution.
+        $query = $this->db->connect()->prepare($sql);
+
+        // Bind the product properties and ID to the SQL statement.
+        $query->bindParam(':name', $this->name);
+        $query->bindParam(':category', $this->category);
+        $query->bindParam(':price', $this->price);
+        $query->bindParam(':availability', $this->availability);
+        $query->bindParam(':id', $this->id);
+
+        // Execute the query. If successful, return true; otherwise, return false.
+        return $query->execute();
+    }
+
     // The fetchRecord() method retrieves a single product record from the database based on its ID.
     function fetchRecord($recordID) {
         // SQL query to select a single product based on its ID.
@@ -80,7 +86,10 @@ class Product {
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
+
+        // Bind the recordID parameter to the SQL query.
         $query->bindParam(':recordID', $recordID);
+
         $data = null; // Initialize a variable to hold the fetched data.
 
         // Execute the query. If successful, fetch the result.
@@ -90,9 +99,25 @@ class Product {
 
         return $data; // Return the fetched data.
     }
+
+    // The delete() method removes a product from the database based on its ID.
+    function delete($recordID) {
+        // SQL query to delete a product by its ID.
+        $sql = "DELETE FROM product WHERE id = :recordID;";
+
+        // Prepare the SQL statement for execution.
+        $query = $this->db->connect()->prepare($sql);
+
+        // Bind the recordID parameter to the SQL query.
+        $query->bindParam(':recordID', $recordID);
+        
+        // Execute the query. If successful, return true; otherwise, return false.
+        return $query->execute();
+    }
 }
 
 // Uncomment the lines below to test the Product class methods.
+
 // Create a new Product instance and display all products.
 // $obj = new Product();
 // var_dump($obj->showAll());
@@ -103,4 +128,5 @@ class Product {
 // Uncomment to update a product using the edit() method.
 // $obj->edit(1);
 
+// Uncomment to fetch a product's record by ID.
 // var_dump($obj->fetchRecord(1));
