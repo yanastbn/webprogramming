@@ -23,19 +23,18 @@
         // Create an instance of the Product class to interact with the database
         $productObj = new Product();
 
-        // Call the showAll() method to retrieve all products from the database
-        $array = $productObj->showAll();
-        
         // Initialize keyword and category variables for filtering
         $keyword = $category = '';
+        
         // Check if the form is submitted via POST method and 'search' button is clicked
         if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])){
             // Sanitize input from the search form
             $keyword = htmlentities($_POST['keyword']);
             $category = htmlentities($_POST['category']);
-            // Retrieve the filtered list of products
-            $array = $productObj->showAll($keyword, $category);
         }
+
+        // Retrieve the filtered list of products, even if no search is conducted
+        $array = $productObj->showAll($keyword, $category);
     ?>
 
     <!-- Form for filtering products based on category and keyword -->
@@ -45,8 +44,8 @@
         <select name="category" id="category">
             <option value="">All</option>
             <!-- Retain selected value after form submission -->
-            <option value="Gadget" <?= (isset($category) && $category == 'Gadget') ? 'selected=true' : '' ?>>Gadget</option>
-            <option value="Toys" <?= (isset($category) && $category == 'Toys') ? 'selected=true' : '' ?>>Toys</option>
+            <option value="Gadget" <?= ($category == 'Gadget') ? 'selected' : '' ?>>Gadget</option>
+            <option value="Toys" <?= ($category == 'Toys') ? 'selected' : '' ?>>Toys</option>
         </select>
         <!-- Search input field for keywords -->
         <label for="keyword">Search</label>
@@ -59,6 +58,7 @@
     <table border="1">
         <tr>
             <th>No.</th> <!-- Column for numbering the products -->
+            <th>Code</th> <!-- Column for the product code -->
             <th>Name</th> <!-- Column for the product name -->
             <th>Category</th> <!-- Column for the product category -->
             <th>Price</th> <!-- Column for the product price -->
@@ -72,7 +72,7 @@
         if (empty($array)) {
         ?>
             <tr>
-                <td colspan="6"><p class="search">No product found.</p></td>
+                <td colspan="7"><p class="search">No product found.</p></td>
             </tr>
         <?php
         }
@@ -82,14 +82,15 @@
         <tr>
             <!-- Display the row number -->
             <td><?= $i ?></td>
+            <td><?= $arr['code'] ?></td> <!-- Sanitize output -->
             <!-- Display the product name -->
-            <td><?= $arr['name'] ?></td>
+            <td><?= $arr['name'] ?></td> <!-- Sanitize output -->
             <!-- Display the product category -->
-            <td><?= $arr['category'] ?></td>
+            <td><?= $arr['category'] ?></td> <!-- Sanitize output -->
             <!-- Display the product price -->
-            <td><?= $arr['price'] ?></td>
+            <td><?= $arr['price'] ?></td> <!-- Sanitize output -->
             <!-- Display the product availability status -->
-            <td><?= $arr['availability'] ?></td>
+            <td><?= $arr['availability'] ?></td> <!-- Sanitize output -->
             <!-- Action links: Edit and Delete -->
             <td>
                 <!-- Link to edit the product -->

@@ -5,8 +5,9 @@ require_once 'database.php';
 
 // The Product class handles operations related to products in the database.
 class Product {
-    // These properties represent the columns in the 'products' table.
+    // These properties represent the columns in the 'product' table.
     public $id = '';            // The ID of the product. Typically used when updating or deleting a product.
+    public $code = '';          // The unique code of the product.
     public $name = '';          // The name of the product.
     public $category = '';      // The category the product belongs to.
     public $price = '';         // The price of the product.
@@ -22,12 +23,13 @@ class Product {
     // The add() method is used to add a new product to the database.
     function add() {
         // SQL query to insert a new product into the 'product' table.
-        $sql = "INSERT INTO product (name, category, price, availability) VALUES (:name, :category, :price, :availability);";
+        $sql = "INSERT INTO product (code, name, category, price, availability) VALUES (:code, :name, :category, :price, :availability);";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
 
         // Bind the product properties to the named placeholders in the SQL statement.
+        $query->bindParam(':code', $this->code);
         $query->bindParam(':name', $this->name);
         $query->bindParam(':category', $this->category);
         $query->bindParam(':price', $this->price);
@@ -41,7 +43,7 @@ class Product {
     function showAll($keyword='', $category='') {
         // SQL query to select all products, ordered alphabetically by name.
         // If keyword or category are provided, they are used for filtering the results.
-        $sql = "SELECT * FROM product WHERE (name LIKE '%' :keyword '%' OR category LIKE '%' :keyword '%') AND (category LIKE '%' :category '%') ORDER BY name ASC;";
+        $sql = "SELECT * FROM product WHERE (code LIKE CONCAT('%', :keyword, '%') OR name LIKE CONCAT('%', :keyword, '%') OR category LIKE CONCAT('%', :keyword, '%')) AND (category LIKE CONCAT('%', :category, '%')) ORDER BY name ASC;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -53,7 +55,7 @@ class Product {
         $data = null; // Initialize a variable to hold the fetched data.
 
         // Execute the query. If successful, fetch all the results into an array.
-        if($query->execute()) {
+        if ($query->execute()) {
             $data = $query->fetchAll(); // Fetch all rows from the result set.
         }
 
@@ -63,12 +65,13 @@ class Product {
     // The edit() method is used to update an existing product in the database.
     function edit() {
         // SQL query to update an existing product in the 'product' table.
-        $sql = "UPDATE product SET name = :name, category = :category, price = :price, availability = :availability WHERE id = :id;";
+        $sql = "UPDATE product SET code = :code, name = :name, category = :category, price = :price, availability = :availability WHERE id = :id;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
 
         // Bind the product properties and ID to the SQL statement.
+        $query->bindParam(':code', $this->code);
         $query->bindParam(':name', $this->name);
         $query->bindParam(':category', $this->category);
         $query->bindParam(':price', $this->price);
@@ -93,7 +96,7 @@ class Product {
         $data = null; // Initialize a variable to hold the fetched data.
 
         // Execute the query. If successful, fetch the result.
-        if($query->execute()) {
+        if ($query->execute()) {
             $data = $query->fetch(); // Fetch the single row from the result set.
         }
 
@@ -113,6 +116,36 @@ class Product {
         
         // Execute the query. If successful, return true; otherwise, return false.
         return $query->execute();
+    }
+
+    // The codeExists() method checks if a product code already exists in the database.
+    // It can exclude a specific product ID when performing the check (useful during updates).
+    function codeExists($code, $excludeID = null) {
+        // SQL query to check if the product code exists.
+        $sql = "SELECT COUNT(*) FROM product WHERE code = :code";
+
+        // If $excludeID is provided, modify the SQL query to exclude the record with this ID.
+        if ($excludeID) {
+            $sql .= " AND id != :excludeID";
+        }
+
+        // Prepare the SQL statement.
+        $query = $this->db->connect()->prepare($sql);
+
+        // Bind the parameters.
+        $query->bindParam(':code', $code);
+
+        if ($excludeID) {
+            $query->bindParam(':excludeID', $excludeID);
+        }
+
+        // Execute the query.
+        $query->execute();
+
+        // Fetch the count. If it's greater than 0, the code already exists.
+        $count = $query->fetchColumn();
+
+        return $count > 0;
     }
 }
 
