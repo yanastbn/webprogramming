@@ -27,7 +27,7 @@
         $keyword = $category = '';
         
         // Check if the form is submitted via POST method and 'search' button is clicked
-        if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // Sanitize input from the search form
             $keyword = htmlentities($_POST['keyword']);
             $category = htmlentities($_POST['category']);
@@ -44,8 +44,14 @@
         <select name="category" id="category">
             <option value="">All</option>
             <!-- Retain selected value after form submission -->
-            <option value="Gadget" <?= ($category == 'Gadget') ? 'selected' : '' ?>>Gadget</option>
-            <option value="Toys" <?= ($category == 'Toys') ? 'selected' : '' ?>>Toys</option>
+            <?php
+                $categoryList = $productObj->fetchCategory();
+                foreach ($categoryList as $cat){
+            ?>
+                <option value="<?= $cat['id'] ?>" <?= ($category == $cat['id']) ? 'selected' : '' ?>><?= $cat['name'] ?></option>
+            <?php
+                }
+            ?>
         </select>
         <!-- Search input field for keywords -->
         <label for="keyword">Search</label>
@@ -82,15 +88,15 @@
         <tr>
             <!-- Display the row number -->
             <td><?= $i ?></td>
-            <td><?= $arr['code'] ?></td> <!-- Sanitize output -->
+            <td><?= $arr['code'] ?></td>
             <!-- Display the product name -->
-            <td><?= $arr['name'] ?></td> <!-- Sanitize output -->
+            <td><?= $arr['name'] ?></td>
             <!-- Display the product category -->
-            <td><?= $arr['category'] ?></td> <!-- Sanitize output -->
+            <td><?= $arr['category_name'] ?></td>
             <!-- Display the product price -->
-            <td><?= $arr['price'] ?></td> <!-- Sanitize output -->
+            <td><?= $arr['price'] ?></td>
             <!-- Display the product availability status -->
-            <td><?= $arr['availability'] ?></td> <!-- Sanitize output -->
+            <td><?= $arr['availability'] ?></td>
             <!-- Action links: Edit and Delete -->
             <td>
                 <!-- Link to edit the product -->
@@ -104,7 +110,7 @@
         }
         ?>
     </table>
-
+    
     <!-- Link the external JavaScript file that contains event handling for deleting products -->
     <script src="./product.js"></script>
 </body>

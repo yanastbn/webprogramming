@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             // Populate form fields with existing product details for editing.
             $code = $record['code'];
             $name = $record['name'];
-            $category = $record['category'];
+            $category = $record['category_id'];
             $price = $record['price'];
             $availability = $record['availability'];
         } else {
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $productObj->id = $id;
         $productObj->code = $code;
         $productObj->name = $name;
-        $productObj->category = $category;
+        $productObj->category_id = $category;
         $productObj->price = $price;
         $productObj->availability = $availability;
 
@@ -136,8 +136,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <br>
         <select name="category" id="category">
             <option value="">--Select--</option>
-            <option value="Gadget" <?= ($category == 'Gadget') ? 'selected' : '' ?>>Gadget</option>
-            <option value="Toys" <?= ($category == 'Toys') ? 'selected' : '' ?>>Toys</option>
+            <?php
+                $categoryList = $productObj->fetchCategory();
+                foreach ($categoryList as $cat){
+            ?>
+                <option value="<?= $cat['id'] ?>" <?= ($category == $cat['id']) ? 'selected' : '' ?>><?= $cat['name'] ?></option>
+            <?php
+                }
+            ?>
         </select>
         <br>
         <?php if (!empty($categoryErr)): ?>

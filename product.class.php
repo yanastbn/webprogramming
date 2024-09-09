@@ -9,7 +9,7 @@ class Product {
     public $id = '';            // The ID of the product. Typically used when updating or deleting a product.
     public $code = '';          // The unique code of the product.
     public $name = '';          // The name of the product.
-    public $category = '';      // The category the product belongs to.
+    public $category_id = '';      // The category the product belongs to.
     public $price = '';         // The price of the product.
     public $availability = '';  // Availability status of the product (e.g., 'In Stock', 'Out of Stock').
 
@@ -23,7 +23,7 @@ class Product {
     // The add() method is used to add a new product to the database.
     function add() {
         // SQL query to insert a new product into the 'product' table.
-        $sql = "INSERT INTO product (code, name, category, price, availability) VALUES (:code, :name, :category, :price, :availability);";
+        $sql = "INSERT INTO product (code, name, category_id, price, availability) VALUES (:code, :name, :category_id, :price, :availability);";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -31,7 +31,7 @@ class Product {
         // Bind the product properties to the named placeholders in the SQL statement.
         $query->bindParam(':code', $this->code);
         $query->bindParam(':name', $this->name);
-        $query->bindParam(':category', $this->category);
+        $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':price', $this->price);
         $query->bindParam(':availability', $this->availability);
 
@@ -43,7 +43,7 @@ class Product {
     function showAll($keyword='', $category='') {
         // SQL query to select all products, ordered alphabetically by name.
         // If keyword or category are provided, they are used for filtering the results.
-        $sql = "SELECT * FROM product WHERE (code LIKE CONCAT('%', :keyword, '%') OR name LIKE CONCAT('%', :keyword, '%') OR category LIKE CONCAT('%', :keyword, '%')) AND (category LIKE CONCAT('%', :category, '%')) ORDER BY name ASC;";
+        $sql = "SELECT p.*, c.name as category_name FROM product p INNER JOIN category c ON p.category_id = c.id WHERE (p.code LIKE CONCAT('%', :keyword, '%') OR p.name LIKE CONCAT('%', :keyword, '%')) AND (c.id LIKE CONCAT('%', :category, '%')) ORDER BY p.name ASC;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -65,7 +65,7 @@ class Product {
     // The edit() method is used to update an existing product in the database.
     function edit() {
         // SQL query to update an existing product in the 'product' table.
-        $sql = "UPDATE product SET code = :code, name = :name, category = :category, price = :price, availability = :availability WHERE id = :id;";
+        $sql = "UPDATE product SET code = :code, name = :name, category_id = :category_id, price = :price, availability = :availability WHERE id = :id;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -73,7 +73,7 @@ class Product {
         // Bind the product properties and ID to the SQL statement.
         $query->bindParam(':code', $this->code);
         $query->bindParam(':name', $this->name);
-        $query->bindParam(':category', $this->category);
+        $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':price', $this->price);
         $query->bindParam(':availability', $this->availability);
         $query->bindParam(':id', $this->id);
@@ -146,6 +146,29 @@ class Product {
         $count = $query->fetchColumn();
 
         return $count > 0;
+    }
+
+    public function fetchCategory() {
+        // Define the SQL query to select all columns from the 'category' table,
+        // ordering the results by the 'name' column in ascending order.
+        $sql = "SELECT * FROM category ORDER BY name ASC;";
+    
+        // Prepare the SQL statement for execution using a database connection.
+        $query = $this->db->connect()->prepare($sql);
+    
+        // Initialize a variable to hold the fetched data. This will store the results of the query.
+        $data = null;
+    
+        // Execute the prepared SQL query.
+        // If the execution is successful, fetch all the results from the query's result set.
+        // Use fetchAll() to retrieve all rows as an array of associative arrays.
+        if ($query->execute()) {
+            $data = $query->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows as an associative array.
+        }
+    
+        // Return the fetched data. This will be an array of categories, where each category
+        // is represented as an associative array with column names as keys.
+        return $data;
     }
 }
 

@@ -8,11 +8,12 @@ require_once('product.class.php');
 $code = $name = $category = $price = $availability = '';
 $codeErr = $nameErr = $categoryErr = $priceErr = $availabilityErr = '';
 
+// Create an instance of the Product class for database interaction.
+$productObj = new Product();
+
 // Check if the form was submitted using the POST method.
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    // Create an instance of the Product class for database interaction.
-    $productObj = new Product();
-
+    
     // Clean and assign the input values to variables using the clean_input function to prevent XSS or other malicious input.
     $code = clean_input($_POST['code']);
     $name = clean_input($_POST['name']);
@@ -56,7 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Assign the sanitized inputs to the product object.
         $productObj->code = $code;
         $productObj->name = $name;
-        $productObj->category = $category;
+        $productObj->category_id = $category;
         $productObj->price = $price;
         $productObj->availability = $availability;
 
@@ -115,8 +116,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <br>
         <select name="category" id="category">
             <option value="">--Select--</option>
-            <option value="Gadget" <?= ($category == 'Gadget') ? 'selected' : '' ?>>Gadget</option>
-            <option value="Toys" <?= ($category == 'Toys') ? 'selected' : '' ?>>Toys</option>
+            <?php
+                $categoryList = $productObj->fetchCategory();
+                foreach ($categoryList as $cat){
+            ?>
+                <option value="<?= $cat['id'] ?>" <?= ($category == $cat['id']) ? 'selected' : '' ?>><?= $cat['name'] ?></option>
+            <?php
+                }
+            ?>
         </select>
         <br>
         <?php if(!empty($categoryErr)): ?>
