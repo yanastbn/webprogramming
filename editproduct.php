@@ -5,8 +5,8 @@ require_once('functions.php');
 require_once('product.class.php');
 
 // Initialize variables to hold form input values and error messages.
-$code = $name = $category = $price = $availability = '';
-$codeErr = $nameErr = $categoryErr = $priceErr = $availabilityErr = '';
+$code = $name = $category = $price = '';
+$codeErr = $nameErr = $categoryErr = $priceErr = '';
 $productObj = new Product(); // Initialize the Product object
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $name = $record['name'];
             $category = $record['category_id'];
             $price = $record['price'];
-            $availability = $record['availability'];
         } else {
             echo 'No product found';
             exit;
@@ -38,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $name = clean_input($_POST['name']);
     $category = clean_input($_POST['category']);
     $price = clean_input($_POST['price']);
-    $availability = isset($_POST['availability']) ? clean_input($_POST['availability']) : '';
 
     // Validate the 'code' field.
     if (empty($code)) {
@@ -66,20 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $priceErr = 'Price must be greater than 0';
     }
 
-    // Validate the 'availability' field.
-    if (empty($availability)) {
-        $availabilityErr = 'Availability is required';
-    }
-
     // If there are no validation errors, proceed to update the product in the database.
-    if (empty($codeErr) && empty($nameErr) && empty($priceErr) && empty($categoryErr) && empty($availabilityErr)) {
+    if (empty($codeErr) && empty($nameErr) && empty($priceErr) && empty($categoryErr)) {
         // Set the product properties.
         $productObj->id = $id;
         $productObj->code = $code;
         $productObj->name = $name;
         $productObj->category_id = $category;
         $productObj->price = $price;
-        $productObj->availability = $availability;
 
         // Try to update the product in the database.
         if ($productObj->edit()) {
@@ -158,18 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <?php if (!empty($priceErr)): ?>
             <span class="error"><?= $priceErr ?></span>
             <br>
-        <?php endif; ?>
-
-        <!-- Availability radio buttons with validation error display -->
-        <label for="availability">Availability</label><span class="error">*</span>
-        <br>
-        <input type="radio" value="In Stock" name="availability" id="instock" <?= ($availability == 'In Stock') ? 'checked' : '' ?>>
-        <label for="instock">In Stock</label>
-        <input type="radio" value="No Stock" name="availability" id="nostock" <?= ($availability == 'No Stock') ? 'checked' : '' ?>>
-        <label for="nostock">No Stock</label>
-        <br>
-        <?php if (!empty($availabilityErr)): ?>
-            <span class="error"><?= $availabilityErr ?></span><br>
         <?php endif; ?>
 
         <!-- Submit button -->

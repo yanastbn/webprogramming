@@ -68,7 +68,8 @@
             <th>Name</th> <!-- Column for the product name -->
             <th>Category</th> <!-- Column for the product category -->
             <th>Price</th> <!-- Column for the product price -->
-            <th>Availability</th> <!-- Column for the product availability status -->
+            <th>Total Stocks</th>
+            <th>Available Stocks</th>
             <th>Action</th> <!-- Column for actions like editing or deleting the product -->
         </tr>
         
@@ -84,6 +85,7 @@
         }
         // Loop through the array of products and display each product in a table row
         foreach ($array as $arr) {
+            $available = $arr['stock_in'] - $arr['stock_out'];
         ?>
         <tr>
             <!-- Display the row number -->
@@ -95,10 +97,11 @@
             <td><?= $arr['category_name'] ?></td>
             <!-- Display the product price -->
             <td><?= $arr['price'] ?></td>
-            <!-- Display the product availability status -->
-            <td><?= $arr['availability'] ?></td>
+            <td><?= $arr['stock_in'] ?></td>
+            <td><?= $available ?></td>
             <!-- Action links: Edit and Delete -->
             <td>
+                <a href="stocks.php?id=<?= $arr['id'] ?>">Stock In/Out</a>
                 <!-- Link to edit the product -->
                 <a href="editproduct.php?id=<?= $arr['id'] ?>">Edit</a>
                 <!-- Delete button with product name and ID as data attributes -->

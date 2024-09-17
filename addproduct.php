@@ -5,8 +5,8 @@ require_once('functions.php');
 require_once('product.class.php');
 
 // Initialize variables to hold form input values and error messages.
-$code = $name = $category = $price = $availability = '';
-$codeErr = $nameErr = $categoryErr = $priceErr = $availabilityErr = '';
+$code = $name = $category = $price = '';
+$codeErr = $nameErr = $categoryErr = $priceErr = '';
 
 // Create an instance of the Product class for database interaction.
 $productObj = new Product();
@@ -19,7 +19,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $name = clean_input($_POST['name']);
     $category = clean_input($_POST['category']);
     $price = clean_input($_POST['price']);
-    $availability = isset($_POST['availability']) ? clean_input($_POST['availability']) : '';
 
     // Validate the 'code' field: check if it's empty or if the code already exists in the database.
     if(empty($code)){
@@ -47,19 +46,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $priceErr = 'Price must be greater than 0';
     }
 
-    // Validate the 'availability' field: it must be selected.
-    if(empty($availability)){
-        $availabilityErr = 'Availability is required';
-    }
-
     // If there are no validation errors, proceed to add the product to the database.
-    if(empty($codeErr) && empty($nameErr) && empty($categoryErr) && empty($priceErr) && empty($availabilityErr)){
+    if(empty($codeErr) && empty($nameErr) && empty($categoryErr) && empty($priceErr)){
         // Assign the sanitized inputs to the product object.
         $productObj->code = $code;
         $productObj->name = $name;
         $productObj->category_id = $category;
         $productObj->price = $price;
-        $productObj->availability = $availability;
 
         // Attempt to add the product to the database.
         if($productObj->add()){
@@ -138,18 +131,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <?php if(!empty($priceErr)): ?>
             <span class="error"><?= $priceErr ?></span>
             <br>
-        <?php endif; ?>
-
-        <!-- Product Availability radio buttons with validation error display -->
-        <label for="availability">Availability</label><span class="error">*</span>
-        <br>
-        <input type="radio" value="In Stock" name="availability" id="instock" <?= ($availability == 'In Stock') ? 'checked' : '' ?>>
-        <label for="instock">In Stock</label>
-        <input type="radio" value="No Stock" name="availability" id="nostock" <?= ($availability == 'No Stock') ? 'checked' : '' ?>>
-        <label for="nostock">No Stock</label>
-        <br>
-        <?php if(!empty($availabilityErr)): ?>
-            <span class="error"><?= $availabilityErr ?></span><br>
         <?php endif; ?>
 
         <!-- Submit button to save the product -->
