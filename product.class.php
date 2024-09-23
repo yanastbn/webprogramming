@@ -22,7 +22,7 @@ class Product {
     // The add() method is used to add a new product to the database.
     function add() {
         // SQL query to insert a new product into the 'product' table.
-        $sql = "INSERT INTO product (code, name, category_id, price, availability) VALUES (:code, :name, :category_id, :price);";
+        $sql = "INSERT INTO product (code, name, category_id, price) VALUES (:code, :name, :category_id, :price);";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);

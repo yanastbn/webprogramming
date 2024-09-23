@@ -1,3 +1,15 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['account'])){
+        if(!$_SESSION['account']['is_staff']){
+            header('location: login.php');
+        }
+    }else{
+        header('location: login.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +117,13 @@
                 <!-- Link to edit the product -->
                 <a href="editproduct.php?id=<?= $arr['id'] ?>">Edit</a>
                 <!-- Delete button with product name and ID as data attributes -->
+                <?php
+                    if ($_SESSION['account']['is_admin']){
+                ?>
                 <a href="#" class="deleteBtn" data-id="<?= $arr['id'] ?>" data-name="<?= $arr['name'] ?>">Delete</a>
+                <?php
+                    }
+                ?>
             </td>
         </tr>
         <?php

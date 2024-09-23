@@ -1,5 +1,15 @@
 <?php
 
+session_start();
+
+if(isset($_SESSION['account'])){
+    if(!$_SESSION['account']['is_staff']){
+        header('location: login.php');
+    }
+}else{
+    header('location: login.php');
+}
+
 // Include the functions.php file for utility functions like clean_input, and the product.class.php for database operations.
 require_once('functions.php');
 require_once('product.class.php');

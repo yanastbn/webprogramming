@@ -1,5 +1,15 @@
 <?php
 
+session_start();
+
+if(isset($_SESSION['account'])){
+    if(!$_SESSION['account']['is_staff']){
+        header('location: login.php');
+    }
+}else{
+    header('location: login.php');
+}
+
 require_once('functions.php');
 require_once('product.class.php');
 require_once('stocks.class.php');
