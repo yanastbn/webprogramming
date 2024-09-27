@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2024 at 02:46 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.3.28
+-- Generation Time: Sep 27, 2024 at 07:09 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,6 +22,33 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `sample_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `sample_db`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `is_staff` smallint(6) NOT NULL DEFAULT 1,
+  `is_admin` smallint(6) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`id`, `first_name`, `last_name`, `username`, `password`, `role`, `is_staff`, `is_admin`) VALUES
+(2, 'Dean', 'Billedo', 'admin', '$2y$10$NWHfb3j672MK8UcUdrbRpOPfItFBf4ibZy/JTmjEJEtSy8JDU4PU6', 'admin', 1, 1),
+(3, 'Ald', 'Suarez', 'staff', '$2y$10$1IgUt8SV3Nkd8Uwel53ZPu1o4PXgGcu1YX64r1x7lsiVNYyPiDdAa', 'staff', 1, 0),
+(4, 'Natsu', 'Dragneel', 'customer', '$2y$10$NTHKgW6ViyGcrr/rnnDf0ueT1p9jtfwQ1tdgSxg5SqLJliV2iJC2G', 'customer', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -104,6 +131,13 @@ INSERT INTO `stocks` (`id`, `product_id`, `quantity`, `status`, `reason`, `creat
 --
 
 --
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ausername` (`username`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -126,6 +160,12 @@ ALTER TABLE `stocks`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `account`
+--
+ALTER TABLE `account`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `category`
