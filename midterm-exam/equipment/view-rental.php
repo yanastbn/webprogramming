@@ -13,10 +13,10 @@
     </style>
 </head>
 <body>
-    <a href="rent.php">Rent Computer</a>
+    <a href="rent-equipment.php">Rent Equipment</a>
     
     <?php
-        require_once 'rental.class.php';
+        require_once 'equipment-rental.class.php';
         require_once 'functions.php';
 
         $rentalObj = new Rental();
@@ -39,10 +39,10 @@
     <table border="1">
         <tr>
             <th>No.</th> 
-            <th>Customer</th>
-            <th>Computer</th>
-            <th>Start Time</th>
-            <th>End Time</th>
+            <th>Renter</th>
+            <th>Equipment</th>
+            <th>Rental Date</th>
+            <th>Return Date</th>
             <th>Remarks</th>
             <th>Status</th>
             <th>Action</th>
@@ -62,17 +62,17 @@
             ?>
             <tr>
                 <td><?= $i ?></td>
-                <td><?= $arr['customer_name'] ?></td>
-                <td><?= $arr['unit_name'] ?></td>
-                <td><?= date('m-d-Y h:i A', strtotime($arr['start_time'])) ?></td>
-                <td><?= !empty($arr['end_time'])? date('m-d-Y h:i A', strtotime($arr['end_time'])):'' ?></td>
+                <td><?= $arr['renter_name'] ?></td>
+                <td><?= $arr['equipment_name'] ?></td>
+                <td><?= date('m-d-Y', strtotime($arr['rental_date'])) ?></td>
+                <td><?= !empty($arr['return_date'])? date('m-d-Y', strtotime($arr['return_date'])):'' ?></td>
                 <td><?= $arr['remarks'] ?></td>
                 <td><?= $arr['status'] ?></td>
                 <?php
-                if ($status == 'In Use'){
+                if ($status == 'Rented'){
                 ?>
                     <td>
-                        <a href="complete.php?id=<?= $arr['rental_id'] ?>">Return</a>
+                        <a href="return-equipment.php?id=<?= $arr['rental_id'] ?>">Return Equipment</a>
                     </td>
                 <?php
                 }

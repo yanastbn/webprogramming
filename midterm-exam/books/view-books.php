@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rental</title>
+    <title>View Books</title>
     <style>
         /* Styling for the search results */
         p.search {
@@ -13,10 +13,10 @@
     </style>
 </head>
 <body>
-    <a href="rent.php">Rent Equipment</a>
+    <a href="borrow-book.php">Borrow Book</a>
     
     <?php
-        require_once 'rental.class.php';
+        require_once 'books-rental.class.php';
         require_once 'functions.php';
 
         $rentalObj = new Rental();
@@ -39,9 +39,9 @@
     <table border="1">
         <tr>
             <th>No.</th> 
-            <th>Renter</th>
-            <th>Equipment</th>
-            <th>Rental Date</th>
+            <th>Borrower Name</th>
+            <th>Book Title</th>
+            <th>Borrow Date</th>
             <th>Return Date</th>
             <th>Remarks</th>
             <th>Status</th>
@@ -62,17 +62,17 @@
             ?>
             <tr>
                 <td><?= $i ?></td>
-                <td><?= $arr['renter_name'] ?></td>
-                <td><?= $arr['equipment_name'] ?></td>
-                <td><?= date('m-d-Y', strtotime($arr['rental_date'])) ?></td>
-                <td><?= !empty($arr['return_date'])? date('m-d-Y', strtotime($arr['return_date'])):'' ?></td>
+                <td><?= $arr['borrower_name'] ?></td>
+                <td><?= $arr['title'] ?></td>
+                <td><?= date('M-d-Y', strtotime($arr['borrow_date'])) ?></td>
+                <td><?= !empty($arr['return_date'])? date('M-d-Y', strtotime($arr['return_date'])):'' ?></td>
                 <td><?= $arr['remarks'] ?></td>
                 <td><?= $arr['status'] ?></td>
                 <?php
-                if ($status == 'Rented'){
+                if ($status == 'Borrowed'){
                 ?>
                     <td>
-                        <a href="complete.php?id=<?= $arr['rental_id'] ?>">Complete</a>
+                        <a href="return-book.php?id=<?= $arr['rental_id'] ?>">Return Book</a>
                     </td>
                 <?php
                 }

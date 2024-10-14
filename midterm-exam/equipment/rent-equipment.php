@@ -1,7 +1,7 @@
 <?php
 
 require_once('functions.php');
-require_once('rental.class.php');
+require_once 'equipment-rental.class.php';
 
 $renter_name = $equipment_id = $rental_date = $remarks = '';
 $renter_nameErr = $equipment_idErr = $rental_dateErr = $remarksErr = '';
@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $rentalObj->remarks = $remarks;
 
         if($rentalObj->rent()){
-            header('Location: rental.php');
+            header('Location: view-rental.php');
         } else {
             echo 'Something went wrong when renting an equipment.';
         }

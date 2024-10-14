@@ -1,7 +1,7 @@
 <?php
 
 require_once('functions.php');
-require_once('rental.class.php');
+require_once('computer-rental.class.php');
 
 $id = $customer_name = $computer_unit_id = $start_time = $end_time = $remarks = '';
 $customer_nameErr = $computer_unit_idErr = $start_timeErr = $end_timeErr = $remarksErr = '';
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $rentalObj->remarks = $remarks;
 
         if($rentalObj->complete()){
-            header('Location: computer.php');
+            header('Location: view-computer.php');
         } else {
             echo 'Something went wrong when renting a computer.';
         }
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <?php endif; ?>
 
         <br>
-        <input type="submit" value="Rent Computer">
+        <input type="submit" value="End Computer Time">
     </form>
 </body>
 </html>
