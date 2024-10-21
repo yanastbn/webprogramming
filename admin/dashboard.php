@@ -97,16 +97,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-12 col-lg-6 col-xl-5 d-flex flex-column">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column">
                         <div class="row flex-grow-1">
                         <div class="col-12 col-sm-6 pb-4">
-                            <div class="card widget-flat equal-height">
+                            <div class="card widget-flat mb-0">
                             <div class="card-body">
                                 <div class="float-end me-2">
                                     <i class="bi bi-people fs-1  brand-color"></i>
                                 </div>
                                 <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Customers</h5>
-                                <h3 class="my-5">36,254</h3>
+                                <h3 class="my-3">36,254</h3>
                                 <p class="mb-0 text-muted">
                                     <span class="text-success me-2"><i class="bi bi-arrow-up"></i> 5.27%</span>
                                 </p>
@@ -118,13 +118,13 @@
                         </div>
 
                         <div class="col-12 col-sm-6 pb-4">
-                            <div class="card widget-flat equal-height">
+                            <div class="card widget-flat mb-0">
                             <div class="card-body">
                                 <div class="float-end me-2">
                                     <i class="bi bi-cart3 fs-1  brand-color"></i>
                                 </div>
                                 <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Orders</h5>
-                                <h3 class="my-5">5,543</h3>
+                                <h3 class="my-3">5,543</h3>
                                 <p class="mb-0 text-muted">
                                     <span class="text-danger me-2"><i class="bi bi-arrow-down"></i></i> 1.08%</span>
                                 </p>
@@ -136,13 +136,13 @@
                         </div>
 
                         <div class="col-12 col-sm-6 pb-4">
-                            <div class="card widget-flat equal-height">
+                            <div class="card widget-flat mb-0">
                             <div class="card-body">
                                 <div class="float-end me-2">
                                     <i class="bi bi-graph-up fs-1  brand-color"></i>
                                 </div>
                                 <h5 class="text-muted fw-normal mt-0" title="Average Sales">Sales</h5>
-                                <h3 class="my-5">₱6,254</h3>
+                                <h3 class="my-3">₱6,254</h3>
                                 <p class="mb-0 text-muted">
                                     <span class="text-danger me-2"><i class="bi bi-arrow-down"></i></i> 7.00%</span>
                                 </p>
@@ -154,13 +154,13 @@
                         </div>
 
                         <div class="col-12 col-sm-6 pb-4">
-                            <div class="card widget-flat equal-height">
+                            <div class="card widget-flat mb-0">
                             <div class="card-body">
                                 <div class="float-end me-2">
                                     <i class="bi bi-graph-up-arrow fs-1  brand-color"></i>
                                 </div>
                                 <h5 class="text-muted fw-normal mt-0" title="Growth">Growth</h5>
-                                <h3 class="my-5">+ 30.56%</h3>
+                                <h3 class="my-3">+ 30.56%</h3>
                                 <p class="mb-0 text-muted">
                                     <span class="text-success me-2"><i class="bi bi-arrow-up"></i></i> 4.87%</span>
                                 </p>
@@ -172,7 +172,7 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-6 col-xl-7">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card card-h-100 p-3">
                             <div class="d-flex card-header justify-content-between align-items-center w-100">
                                 <h3 class="header-title mb-0">Sales By Month</h3>
