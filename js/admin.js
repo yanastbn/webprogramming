@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    $('.nav-link').on('click', function(){
+    $('.nav-link').on('click', function(e){
+        e.preventDefault()
         $('.nav-link').removeClass('link-active')
         $(this).addClass('link-active')
     })
@@ -62,7 +63,7 @@ $(document).ready(function(){
     function viewProducts(){
         $.ajax({
             type: 'GET',
-            url: '../product/view-product.php',
+            url: '../product/view-products.php',
             dataType: 'html',
             success: function(response){
                 $('.content-page').html(response)
