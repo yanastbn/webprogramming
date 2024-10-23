@@ -360,6 +360,12 @@
     border-color: var(--brand-color)
 }
 
+div.dt-container div.dt-paging ul.pagination{
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 @media screen and (min-width: 768px) {
     .sidebar{
         display: flex;

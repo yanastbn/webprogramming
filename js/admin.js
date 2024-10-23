@@ -67,7 +67,16 @@ $(document).ready(function(){
             dataType: 'html',
             success: function(response){
                 $('.content-page').html(response)
-                $('#table-products').DataTable()
+
+                var table = $('#table-products').DataTable({
+                    dom: 'rtp',
+                    pageLength: 10
+                });
+
+                // Bind custom input to DataTable search
+                $('#custom-search').on('keyup', function() {
+                    table.search(this.value).draw();
+                });
             }
         })
     }
