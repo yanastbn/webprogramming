@@ -11,29 +11,44 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="addproduct.php" class="btn btn-primary brand-bg-color">Add Product</a>
-                        <div class="page-title-right">
-                            <form class="d-flex">
-                                <div class="input-group">
-                                    <input type="text" class="form-control form-control-light" id="custom-search" placeholder="Search...">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <?php
+                            require_once '../classes/product.class.php';
+                            session_start();
+                            $productObj = new Product();
+                        ?>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <form class="d-flex me-2">
+                                <div class="input-group w-100">
+                                    <input type="text" class="form-control form-control-light" id="custom-search" placeholder="Search products...">
                                     <span class="input-group-text bg-primary border-primary text-white brand-bg-color">
                                         <i class="bi bi-search"></i>
                                     </span>
                                 </div>
                             </form>
+                            <div class="d-flex align-items-center">
+                                <label for="category-filter" class="me-2">Category</label>
+                                <select id="category-filter" class="form-select">
+                                    <option value="">Choose...</option>
+                                    <option value="">All</option>
+                                    <?php
+                                        $categoryList = $productObj->fetchCategory();
+                                        foreach ($categoryList as $cat) {
+                                    ?>
+                                        <option value="<?= $cat['name'] ?>"><?= $cat['name'] ?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="page-title-right d-flex align-items-center"> 
+                            <a href="addproduct.php" class="btn btn-primary brand-bg-color">Add Product</a>
                         </div>
                     </div>
                     
-                    <?php
-                        require_once '../classes/product.class.php';
-                        session_start();
-                        $productObj = new Product();
-                        $array = $productObj->showAll();
-                    ?>
-                    
                     <div class="table-responsive">
-                        <table id="table-products" class="table table-hover table-bordered mb-0">
+                        <table id="table-products" class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
                                 <tr>
                                     <th>No.</th>
@@ -49,15 +64,8 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                if (empty($array)) {
-                                ?>
-                                    <tr>
-                                        <td colspan="8" class="text-center">
-                                            <p class="text-muted">No product found.</p>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
+                                $array = $productObj->showAll();
+
                                 foreach ($array as $arr) {
                                     $available = $arr['stock_in'] - $arr['stock_out'];
                                 ?>

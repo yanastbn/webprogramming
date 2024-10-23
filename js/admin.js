@@ -70,16 +70,24 @@ $(document).ready(function(){
 
                 var table = $('#table-products').DataTable({
                     dom: 'rtp',
-                    pageLength: 10
+                    pageLength: 10,
+                    ordering: false,
                 });
 
                 // Bind custom input to DataTable search
                 $('#custom-search').on('keyup', function() {
                     table.search(this.value).draw();
                 });
+
+                $('#category-filter').on('change', function() {
+                    table.column(3).search(this.value).draw();
+                });
+
             }
         })
     }
+
+
 
     $('#dashboard-link').trigger('click')
 });
