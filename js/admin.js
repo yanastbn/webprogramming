@@ -76,11 +76,13 @@ $(document).ready(function(){
 
                 // Bind custom input to DataTable search
                 $('#custom-search').on('keyup', function() {
-                    table.search(this.value).draw();
+                    table.search(this.value).draw()
                 });
 
                 $('#category-filter').on('change', function() {
-                    table.column(3).search(this.value).draw();
+                    if(this.value !== 'choose'){
+                        table.column(3).search(this.value).draw()
+                    }
                 });
 
             }
