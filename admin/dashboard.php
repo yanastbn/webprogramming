@@ -1,3 +1,14 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['account'])){
+        if(!$_SESSION['account']['is_staff']){
+            header('location: ../account/login.php');
+        }
+    }else{
+        header('location: ../account/login.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +36,7 @@
                             <ul class="dropdown-menu text-small">
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                <li><a class="dropdown-item" href="../account/logout.php">Sign out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -87,5 +98,6 @@
     <script src="../vendor/chartjs-4.4.5/chart.js"></script>
     <script src="../vendor/datatable-2.1.8/datatables.min.js"></script>
     <script src="../js/admin.js"></script>
+    <script src="../js/product.js"></script>
 </body>
 </html>

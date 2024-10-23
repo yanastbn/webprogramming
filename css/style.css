@@ -141,6 +141,12 @@
     border: none;
 }
 
+.brand-bg-color:hover{
+    background-color: var(--ct-red) !important;
+    color: white;
+    border: none;
+}
+
 .brand-color{
     color: var(--brand-color) !important;
 }
@@ -347,6 +353,11 @@
 
 .sidebar{
     display: none;
+}
+
+.active>.page-link, .page-link.active{
+    background-color: var(--brand-color);
+    border-color: var(--brand-color)
 }
 
 @media screen and (min-width: 768px) {

@@ -18,7 +18,7 @@ deleteButtons.forEach(button => {
         // If the user confirms deletion
         if (response) {
             // Send a GET request to delete the product using the fetch API
-            fetch('deleteproduct.php?id=' + productID, {
+            fetch('../products/deleteproduct.php?id=' + productID, {
                 method: 'GET'
             })
             .then(response => response.text())  // Parse the response as plain text
@@ -26,7 +26,7 @@ deleteButtons.forEach(button => {
                 // If the server responds with 'success'
                 if(data === 'success') {
                     // Redirect the user to 'product.php'
-                    window.location.href = 'product.php';
+                    window.location.href = 'admin/products';
                 }
             });
         }

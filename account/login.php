@@ -1,6 +1,6 @@
 <?php
-    require_once 'functions.php';
-    require_once 'account.class.php';
+    require_once '../tools/functions.php';
+    require_once '../classes/account.class.php';
 
     session_start();
 
@@ -15,14 +15,14 @@
         if($accountObj->login($username, $password)){
             $data = $accountObj->fetch($username);
             $_SESSION['account'] = $data;
-            header('location: dashboard.php');
+            header('location: ../admin/dashboard.php');
         }else{
             $loginErr = 'Invalid username/password';
         }
     }else{
         if(isset($_SESSION['account'])){
             if($_SESSION['account']['is_staff']){
-                header('location: dashboard.php');
+                header('location: ../admin/dashboard.php');
             }
         }
     }

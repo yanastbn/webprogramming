@@ -63,7 +63,7 @@ $(document).ready(function(){
     function viewProducts(){
         $.ajax({
             type: 'GET',
-            url: '../product/view-products.php',
+            url: '../products/view-products.php',
             dataType: 'html',
             success: function(response){
                 $('.content-page').html(response)
