@@ -51,13 +51,13 @@
                         <table id="table-products" class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="text-start">No.</th>
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Price</th>
-                                    <th>Total Stocks</th>
-                                    <th>Available Stocks</th>
+                                    <th class="text-center">Total Stocks</th>
+                                    <th class="text-center">Available Stocks</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -70,13 +70,13 @@
                                     $available = $arr['stock_in'] - $arr['stock_out'];
                                 ?>
                                     <tr>
-                                        <td><?= $i ?></td>
+                                        <td class="text-start"><?= $i ?></td>
                                         <td><?= $arr['code'] ?></td>
                                         <td><?= $arr['name'] ?></td>
                                         <td><?= $arr['category_name'] ?></td>
                                         <td><?= number_format($arr['price'], 2) ?></td>
-                                        <td><?= $arr['stock_in'] ?></td>
-                                        <td>
+                                        <td class="text-center"><?= $arr['stock_in'] ?></td>
+                                        <td class="text-center">
                                             <span class="
                                                 <?php
                                                 if ($available < 1) {
