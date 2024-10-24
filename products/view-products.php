@@ -89,9 +89,9 @@
                                                 <?= $available ?>
                                             </span>
                                         </td>
-                                        <td>
-                                            <a href="../stocks/stocks.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-primary me-2">Stock In/Out</a>
-                                            <a href="../products/editproduct.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-success me-2">Edit</a>
+                                        <td class="text-nowrap">
+                                            <a href="../stocks/stocks.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-primary me-1">Stock In/Out</a>
+                                            <a href="../products/editproduct.php?id=<?= $arr['id'] ?>" class="btn btn-sm btn-outline-success me-1">Edit</a>
                                             <?php if (isset($_SESSION['account']['is_admin']) && $_SESSION['account']['is_admin']) { ?>
                                                 <button class="btn btn-sm btn-outline-danger deleteBtn" data-id="<?= $arr['id'] ?>" data-name="<?= htmlspecialchars($arr['name']) ?>">Delete</button>
                                             <?php } ?>
