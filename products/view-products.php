@@ -55,7 +55,7 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Price</th>
+                                    <th class="text-start">Price</th>
                                     <th class="text-center">Total Stocks</th>
                                     <th class="text-center">Available Stocks</th>
                                     <th>Action</th>
