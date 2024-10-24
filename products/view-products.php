@@ -6,7 +6,7 @@
             </div>
         </div>
     </div>
-
+    <div class="modal-container"></div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="page-title-right d-flex align-items-center"> 
-                            <a href="addproduct.php" class="btn btn-primary brand-bg-color">Add Product</a>
+                            <a id="add-product" href="#" class="btn btn-primary brand-bg-color">Add Product</a>
                         </div>
                     </div>
                     
@@ -80,9 +80,9 @@
                                             <span class="
                                                 <?php
                                                 if ($available < 1) {
-                                                    echo 'badge rounded-pill bg-danger';
+                                                    echo 'badge rounded-pill bg-danger px-3';
                                                 } elseif ($available <= 5) {
-                                                    echo 'badge rounded-pill bg-warning'; 
+                                                    echo 'badge rounded-pill bg-warning px-3'; 
                                                 }
                                                 ?>
                                             ">
